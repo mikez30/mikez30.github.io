@@ -1,0 +1,64 @@
+body {
+    background-color: #1e1e1e;
+    color: #fff;
+    font-family: Verdana, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 22px;
+    color: #ADD8E6;
+}
+.instructions {
+    text-align: center; /* Center-align the text */
+    font-size: 14px; /* Adjust the font size */
+    color: #fff; /* Set the color to match the header */
+    font-weight: bold;
+    font-family: Verdana, sans-serif;
+}
+
+form {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label, select, input, button {
+    display: block;
+    margin: 10px 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+select, input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: none;
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 20px;
+    text-align: center;
+}
