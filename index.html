@@ -4,31 +4,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Disease Prediction</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Heart Disease Prediction</h1>
-    <p class="instructions">Please enter the values for the following parameters:</p> 
+    <header>
+        <h1>Heart Disease Prediction</h1>
+        <p class="instructions">Please enter the values for the following parameters:</p>
+    </header>
+   
     <form id="prediction-form">
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required><br><br>
+        <div class="form-row">
+            <!-- Age -->
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
 
-        <label for="sex">Sex:</label>
-        <select id="sex" name="sex" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select><br><br>
 
-        <label for="cholesterol">Cholesterol:</label>
-        <input type="number" id="cholesterol" name="cholesterol" required><br><br>
+            <!-- Sex -->
+            <div class="form-group">
+                <label for="sex">Sex:</label>
+                <select id="sex" name="sex" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+        </div>
 
-        <button type="button" onclick="predict()">Predict</button>
+		<div class="divider"></div>
+
+        <div class="form-row">
+            <!-- Chest Pain Type -->
+            <div class="form-group">
+                <label for="chestPainType">Chest Pain Type:</label>
+                <select id="chestPainType" name="chestPainType" required>
+                    <option value="1">1 - Typical Angina</option>
+                    <option value="2">2 - Atypical Angina</option>
+                    <option value="3">3 - Non-Anginal Pain</option>
+                    <option value="4">4 - Asymptomatic</option>
+                </select>
+            </div>
+
+
+            <!-- Resting Blood Pressure -->
+			<div class="form-group">
+			  <label for="restingBloodPressure" class="slider-label">Resting Blood Pressure (0 -- 250):</label>
+			  <div class="slider-container">
+				<input type="range" id="restingBloodPressure" name="restingBloodPressure" min="0" max="250" oninput="updateRestingBloodPressureValue(this.value)">
+				<output for="restingBloodPressure" id="restingBloodPressureValue" class="slider-value">125</output>
+			  </div>
+			</div>
+
+			<script>
+			function updateRestingBloodPressureValue(value) {
+			  document.getElementById('restingBloodPressureValue').textContent = value;
+			}
+			</script>
+			
+			
+        </div>
+
+		<div class="divider"></div>
+		
+        <div class="form-row">
+            <!-- Cholesterol -->
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol (mg/dl):</label>
+                <input type="number" id="cholesterol" name="cholesterol" required>
+            </div>
+
+
+            <!-- Blood Sugar Levels -->
+            <div class="form-group">
+                <label>Blood Sugar Levels on fasting >120 mg/dl:</label>
+                <input type="radio" id="bloodSugarTrue" name="bloodSugar" value="1">
+                <label for="bloodSugarTrue">True</label>
+                <input type="radio" id="bloodSugarFalse" name="bloodSugar" value="0">
+                <label for="bloodSugarFalse">False</label>
+            </div>
+        </div>
+
+		<div class="divider"></div>
+		
+        <div class="form-row">
+            <!-- Resting ECG -->
+            <div class="form-group">
+                <label for="restingECG">Resting ECG (0, 1, or 2):</label>
+                <select id="restingECG" name="restingECG" required>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+
+            <!-- Max Heart Rate -->
+			<div class="form-group">
+			  <label for="maxHeartRate" class="slider-label">Max Heart Rate (60 -- 250):</label>
+			  <div class="slider-container">
+				<input type="range" id="maxHeartRate" name="maxHeartRate" min="60" max="250" oninput="updateMaxHeartRateValue(this.value)">
+				<output for="maxHeartRate" id="maxHeartRateValue" class="slider-value">155</output>
+			  </div>
+			</div>
+
+			<script>
+			function updateMaxHeartRateValue(value) {
+			  document.getElementById('maxHeartRateValue').textContent = value;
+			}
+			</script>
+			
+        </div>
+
+		<div class="divider"></div>
+
+        <div class="form-row">
+            <!-- Exercise Induced Angina -->
+            <div class="form-group">
+                <label for="exerciseAngina">Exercise Induced Angina:</label>
+                <input type="radio" id="exerciseAnginaFalse" name="exerciseAngina" value="0" required>
+                <label for="exerciseAnginaFalse"> True</label>
+                <input type="radio" id="exerciseAnginaTrue" name="exerciseAngina" value="1" required>
+                <label for="exerciseAnginaTrue">False</label>
+            </div>
+
+
+            <!-- Exercise ST Depression -->
+			<div class="form-group">
+			  <label for="exerciseSTDepression" class="slider-label">ST depression induced by exercise relative to rest (-5.0 -- 10.0):</label>
+			  <div class="slider-container">
+				<input type="range" id="exerciseSTDepression" name="exerciseSTDepression" min="-5.0" max="10.0" step="0.1" oninput="updateExerciseSTDepressionValue(this.value)">
+				<output for="exerciseSTDepression" id="exerciseSTDepressionValue" class="slider-value">2.5</output>
+			  </div>
+			</div>
+
+			<script>
+			function updateExerciseSTDepressionValue(value) {
+			  document.getElementById('exerciseSTDepressionValue').textContent = parseFloat(value).toFixed(1);
+			}
+			</script>
+        </div>
+
+		<div class="divider"></div>
+
+		<div class="form-row">
+            <!-- Slope of the Peak Exercise ST Segment  -->
+            <div class="form-group">
+                <label for="slope">Slope of the Peak Exercise ST Segment (0, 1, or 2):</label>
+                <select id="slope" name="Slope" required>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+
+            <!-- Number of Major Vessels Colored by Fluoroscopy (0, 1, 2, or 3) -->
+            <div class="form-group">
+                <label for="numOfMajorVessels">Number of Major Vessels Colored by Fluoroscopy (0, 1, 2, or 3):</label>
+                <select id="numOfMajorVessels" name="numOfMajorVessels" required>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+					<option value="3">3</option>
+
+                </select>
+            </div>
+        </div>
+
+		<div class="divider"></div>
+		
+		
+		<div class="form-row">
+            <!-- Slope of the Peak Exercise ST Segment  -->
+            <div class="form-group">
+                <label for="Thal">Thal - (0 - Normal, 1 - Fixed Defect, 2 - Reversible Defect): </label>
+                <select id="Thal" name="Thal" required>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+			
+		</div>
+		
+		
+
+        <!-- Continue adding more form rows for other parameters following the same pattern -->
+
+
+        
     </form>
 
-    <div id="result">
+
+    
+	<button type="button" onclick="handleFormSubmit()">Predict</button>
+	<div id="output"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+	
+	<div id="result">
         <!-- Result will be displayed here -->
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
